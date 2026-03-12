@@ -1,7 +1,7 @@
-const CACHE_NAME = 'star7-v1';
+const CACHE_NAME = 'star7-v2';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
+  '/escaperoom/',
+  '/escaperoom/index.html',
 ];
 
 // Install — cache static assets
@@ -29,7 +29,7 @@ self.addEventListener('fetch', (event) => {
   if (request.mode === 'navigate') {
     // Network-first for HTML
     event.respondWith(
-      fetch(request).catch(() => caches.match('/index.html'))
+      fetch(request).catch(() => caches.match('/escaperoom/index.html'))
     );
   } else {
     // Cache-first for assets
