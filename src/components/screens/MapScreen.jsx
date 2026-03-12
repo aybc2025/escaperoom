@@ -125,9 +125,9 @@ export default function MapScreen() {
               onClick={() => dispatch({ type: ACTIONS.GO_TO_SCREEN, payload: 'code' })}
               color="orange"
               size="lg"
-              ariaLabel="הַזֵן קוֹד וְהַפְעֵל מְנוֹעוֹת"
+              ariaLabel="הַזֵן קוֹד וְהַפְעֵל מְנוֹעִים"
             >
-              🔐 הַזֵן קוֹד וְהַפְעֵל מְנוֹעוֹת!
+              🔐 הַזֵן קוֹד וְהַפְעֵל מְנוֹעִים!
             </GlowButton>
           </div>
         )}
