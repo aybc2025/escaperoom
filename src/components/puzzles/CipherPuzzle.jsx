@@ -141,7 +141,7 @@ export default function CipherPuzzle() {
                     {enc}
                   </span>
                   <span className="text-accent-cyan text-xs">↓</span>
-                  <span className={`text-sm font-bold ${isUsed ? 'text-accent-cyan' : 'text-ui-dim'}`}>
+                  <span className="text-sm font-bold text-ui-text">
                     {dec}
                   </span>
                 </div>
