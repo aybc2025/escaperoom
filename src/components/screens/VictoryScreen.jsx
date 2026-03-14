@@ -54,11 +54,18 @@ export default function VictoryScreen() {
         ))}
       </div>
 
-      {/* Replay button */}
-      <div className="animate-slide-up stagger-5">
+      {/* Replay + home buttons */}
+      <div className="flex flex-col items-center gap-4 animate-slide-up stagger-5">
         <GlowButton onClick={handleReplay} color="purple" ariaLabel="שַׂחֵק שׁוּב">
           🔄 שַׂחֵק שׁוּב!
         </GlowButton>
+        <a
+          href="/escaperoom/"
+          className="text-ui-dim text-sm hover:text-accent-cyan transition-colors"
+          aria-label="חזרה לכל חדרי הבריחה"
+        >
+          ← כָּל חֲדָרֵי הַבְּרִיחָה
+        </a>
       </div>
     </div>
   );

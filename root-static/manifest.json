@@ -1,8 +1,9 @@
 {
-  "name": "הַמְּשִׂימָה לְתַחֲנַת הַחָלָל",
-  "short_name": "כּוֹכָב-7",
-  "description": "חדר בריחה דיגיטלי בחלל — הצילו את תחנת כוכב-7!",
+  "name": "חדרי בריחה",
+  "short_name": "בריחה",
+  "description": "חדרי בריחה דיגיטליים — תחנת החלל והאי המסתורי",
   "start_url": "/escaperoom/",
+  "scope": "/escaperoom/",
   "display": "standalone",
   "orientation": "any",
   "theme_color": "#0B0E2D",
