@@ -135,6 +135,7 @@ export default function MazePuzzle() {
       {/* Maze grid */}
       <div className={`flex justify-center mb-6 animate-fade-in ${shaking ? 'animate-shake' : ''}`}>
         <div
+          dir="ltr"
           className="grid gap-0.5 p-2 bg-space-deep rounded-xl border border-accent-cyan/20"
           style={{
             gridTemplateColumns: `repeat(${GRID_SIZE}, ${CELL}px)`,

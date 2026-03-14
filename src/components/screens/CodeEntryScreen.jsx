@@ -41,7 +41,7 @@ export default function CodeEntryScreen() {
             הַקּוֹד מוּכָן!
           </h2>
           <p className="text-game-base font-body text-ui-dim mb-8 animate-slide-up stagger-2">
-            כָּל 4 הַסִּפְרוֹת נֶאֶסְפוּ. הַפְעֵל אֶת הַמְנוֹעוֹת!
+            כָּל 4 הַסִּפְרוֹת נֶאֶסְפוּ. הַפְעֵל אֶת הַמְנוֹעִים!
           </p>
 
           {/* Code display */}
@@ -58,8 +58,8 @@ export default function CodeEntryScreen() {
 
           {/* Activate button */}
           <div className="animate-slide-up stagger-4">
-            <GlowButton onClick={handleActivate} color="orange" size="xl" ariaLabel="הַפְעֵל מְנוֹעוֹת">
-              🔥 הַפְעֵל מְנוֹעוֹת!
+            <GlowButton onClick={handleActivate} color="orange" size="xl" ariaLabel="הַפְעֵל מְנוֹעִים">
+              🔥 הַפְעֵל מְנוֹעִים!
             </GlowButton>
           </div>
         </>
@@ -68,7 +68,7 @@ export default function CodeEntryScreen() {
         <div className="animate-fade-in">
           <div className="text-8xl mb-6 animate-engine-glow">🔥</div>
           <p className="text-game-xl font-display font-bold text-accent-orange animate-breathe glow-text">
-            הַמְנוֹעוֹת נִדְלָקִים...
+            הַמְנוֹעִים נִדְלָקִים...
           </p>
 
           {/* Engine flame effects */}

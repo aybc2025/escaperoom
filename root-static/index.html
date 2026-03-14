@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0B0E2D" />
+  <meta name="description" content="חדרי בריחה דיגיטליים — תחנת החלל והאי המסתורי" />
+  <title>חדרי בריחה</title>
+  <link rel="manifest" href="/escaperoom/manifest.json" />
+  <link rel="apple-touch-icon" href="/escaperoom/icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --space-deep: #0B0E2D;
+      --space-light: #151933;
+      --island-deep: #0A2E1C;
+      --island-light: #0F3D26;
+      --gold: #F2C94C;
+      --cyan: #4EEADD;
+      --purple: #A78BFA;
+      --orange: #FF8A5C;
+      --dim: rgba(255,255,255,0.45);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Heebo', sans-serif;
+      background: var(--space-deep);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Stars background */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* Layout */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      gap: 40px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      animation: slideUp 0.6s ease both;
+    }
+    .header-icon {
+      font-size: 3.5rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .header h1 {
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--cyan), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .header p {
+      font-size: 1.05rem;
+      color: var(--dim);
+      font-weight: 700;
+    }
+
+    /* Cards */
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 480px;
+      animation: slideUp 0.7s 0.15s ease both;
+    }
+    @media (min-width: 600px) {
+      .cards {
+        flex-direction: row;
+        max-width: 760px;
+      }
+      .card { flex: 1; }
+    }
+
+    .card {
+      position: relative;
+      border-radius: 24px;
+      padding: 32px 24px;
+      text-decoration: none;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      text-align: center;
+      border: 1.5px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card:active { transform: translateY(-1px) scale(0.98); }
+
+    /* Space card */
+    .card-space {
+      background: linear-gradient(145deg, #151933 0%, #0d1124 100%);
+      border-color: rgba(78,234,221,0.25);
+    }
+    .card-space:hover {
+      box-shadow: 0 12px 40px rgba(78,234,221,0.2), 0 0 0 1px rgba(78,234,221,0.4);
+      border-color: rgba(78,234,221,0.5);
+    }
+    .card-space::before {
+      background: radial-gradient(circle at 50% 0%, rgba(78,234,221,0.08) 0%, transparent 70%);
+    }
+    .card-space:hover::before { opacity: 1; }
+
+    /* Island card */
+    .card-island {
+      background: linear-gradient(145deg, #0F3D26 0%, #0A2E1C 100%);
+      border-color: rgba(242,201,76,0.25);
+    }
+    .card-island:hover {
+      box-shadow: 0 12px 40px rgba(242,201,76,0.18), 0 0 0 1px rgba(242,201,76,0.4);
+      border-color: rgba(242,201,76,0.5);
+    }
+    .card-island::before {
+      background: radial-gradient(circle at 50% 0%, rgba(242,201,76,0.08) 0%, transparent 70%);
+    }
+    .card-island:hover::before { opacity: 1; }
+
+    .card-emoji {
+      font-size: 3.2rem;
+      display: block;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+    }
+    .card-space .card-title { color: var(--cyan); }
+    .card-island .card-title { color: var(--gold); }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--dim);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+    .card-meta {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      position: relative;
+      z-index: 1;
+    }
+    .card-space .card-meta {
+      background: rgba(78,234,221,0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(78,234,221,0.3);
+    }
+    .card-island .card-meta {
+      background: rgba(242,201,76,0.12);
+      color: var(--gold);
+      border: 1px solid rgba(242,201,76,0.3);
+    }
+
+    .card-cta {
+      margin-top: 6px;
+      font-size: 1rem;
+      font-weight: 800;
+      padding: 12px 28px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      pointer-events: none;
+      position: relative;
+      z-index: 1;
+      transition: box-shadow 0.2s;
+    }
+    .card-space .card-cta {
+      background: var(--cyan);
+      color: var(--space-deep);
+    }
+    .card-island .card-cta {
+      background: var(--gold);
+      color: var(--island-deep);
+    }
+    .card:hover .card-cta {
+      box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+    }
+
+    /* Footer */
+    .footer {
+      color: var(--dim);
+      font-size: 0.8rem;
+      text-align: center;
+      animation: fadeIn 1s 0.4s ease both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<div class="page">
+  <header class="header">
+    <span class="header-icon">🔐</span>
+    <h1>חדרי בריחה</h1>
+    <p>בחרו את ההרפתקה שלכם</p>
+  </header>
+
+  <div class="cards">
+    <a class="card card-space" href="/escaperoom/space/">
+      <span class="card-emoji">🚀</span>
+      <span class="card-title">תחנת כוכב-7</span>
+      <p class="card-desc">תחנת החלל בסכנה — 25 דקות להציל את הצוות לפני שהחמצן אוזל!</p>
+      <span class="card-meta">25 דקות · 4 חדרים · חלל</span>
+      <span class="card-cta">יאללה, מתחילים! 🚀</span>
+    </a>
+
+    <a class="card card-island" href="/escaperoom/island/">
+      <span class="card-emoji">🏝️</span>
+      <span class="card-title">האי המסתורי</span>
+      <p class="card-desc">נתקעתם על אי בודד — פתרו את חידות הג'ונגל ומצאו דרך הביתה!</p>
+      <span class="card-meta">30 דקות · 4 אזורים · טבע</span>
+      <span class="card-cta">יאללה, מפליגים! 🌊</span>
+    </a>
+  </div>
+
+  <footer class="footer">חדרי בריחה דיגיטליים לכל המשפחה</footer>
+</div>
+
+<script>
+  // Generate random stars
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%; left:${Math.random()*100}%;
+      --dur:${(Math.random()*3+2).toFixed(1)}s;
+      --delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    container.appendChild(s);
+  }
+
+  // Register unified service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/escaperoom/sw.js', { scope: '/escaperoom/' })
+        .catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>

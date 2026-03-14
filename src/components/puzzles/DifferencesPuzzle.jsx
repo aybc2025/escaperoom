@@ -206,7 +206,7 @@ export default function DifferencesPuzzle() {
       {/* Found differences list */}
       {foundDiffs.length > 0 && (
         <div className="flex flex-wrap justify-center gap-2 mb-4 animate-fade-in">
-          {DIFFERENCES.map((diff) => {
+          {DIFFERENCES.map((diff, i) => {
             const found = foundDiffs.includes(diff.id);
             return (
               <span
@@ -215,7 +215,7 @@ export default function DifferencesPuzzle() {
                   found ? 'bg-ui-success/20 text-ui-success' : 'bg-space-light/30 text-ui-dim/40'
                 }`}
               >
-                {found ? '✓' : '?'} {diff.label}
+                {found ? `✓ ${diff.label}` : `? הֶבְדֵּל ${i + 1}`}
               </span>
             );
           })}

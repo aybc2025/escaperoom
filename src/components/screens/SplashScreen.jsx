@@ -40,9 +40,16 @@ export default function SplashScreen() {
         </GlowButton>
       </div>
 
-      {/* Decorative elements */}
-      <div className="absolute bottom-8 text-ui-dim text-sm animate-fade-in stagger-6">
-        25 דַּקּוֹת · 4 חֲדָרִים · קוֹד סוֹדִי
+      {/* Decorative elements + home link */}
+      <div className="absolute bottom-8 flex flex-col items-center gap-3 animate-fade-in stagger-6">
+        <span className="text-ui-dim text-sm">25 דַּקּוֹת · 4 חֲדָרִים · קוֹד סוֹדִי</span>
+        <a
+          href="/escaperoom/"
+          className="text-ui-dim text-xs hover:text-accent-cyan transition-colors"
+          aria-label="חזרה לכל חדרי הבריחה"
+        >
+          ← כָּל חֲדָרֵי הַבְּרִיחָה
+        </a>
       </div>
     </div>
   );

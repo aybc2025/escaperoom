@@ -132,16 +132,13 @@ export default function CipherPuzzle() {
               return (
                 <div
                   key={i}
-                  className={`
-                    flex flex-col items-center gap-1 p-2 rounded-lg min-w-[44px]
-                    ${isUsed ? 'bg-accent-purple/20 border border-accent-purple/40' : 'bg-space-deep/30'}
-                  `}
+                  className="flex flex-col items-center gap-1 p-2 rounded-lg min-w-[44px] bg-space-deep/30"
                 >
-                  <span className={`text-sm font-bold ${isUsed ? 'text-accent-purple' : 'text-ui-dim'}`}>
+                  <span className="text-sm font-bold text-ui-dim">
                     {enc}
                   </span>
                   <span className="text-accent-cyan text-xs">↓</span>
-                  <span className={`text-sm font-bold ${isUsed ? 'text-accent-cyan' : 'text-ui-dim'}`}>
+                  <span className="text-sm font-bold text-ui-text">
                     {dec}
                   </span>
                 </div>
