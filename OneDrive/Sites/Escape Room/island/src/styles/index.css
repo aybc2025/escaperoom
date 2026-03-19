@@ -1,0 +1,467 @@
+/* ═══════════════════════════════════════════
+   CSS VARIABLES & THEME
+   ═══════════════════════════════════════════ */
+:root {
+  --jungle-deep: #0A2E1C;
+  --earth-dark:  #1A1209;
+  --turquoise:   #3ED8C9;
+  --gold:        #F2C94C;
+  --sunset:      #FF7B4A;
+  --mist:        #8B6FB0;
+  --cream:       #FFF8E7;
+  --sand:        #E8D5A3;
+  --water-blue:  #2B8FBF;
+  --cave-dark:   #1a1020;
+  --danger:      #E85D4A;
+  --success:     #4AE88D;
+  --font-main:   'Heebo', sans-serif;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & GLOBAL
+   ═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  width: 100%; height: 100%;
+  font-family: var(--font-main);
+  background: var(--jungle-deep);
+  color: var(--cream);
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════
+   LAYOUT HELPERS
+   ═══════════════════════════════════════════ */
+.screen {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+.scroll-area {
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--turquoise) transparent;
+}
+.scroll-area::-webkit-scrollbar { width: 6px; }
+.scroll-area::-webkit-scrollbar-thumb { background: var(--turquoise); border-radius: 3px; }
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════ */
+.btn {
+  font-family: var(--font-main); font-weight: 700;
+  font-size: 1.25rem; padding: 14px 32px;
+  border: none; border-radius: 16px; cursor: pointer;
+  min-width: 44px; min-height: 44px;
+  transition: all 0.2s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--sunset), #FF6B3A);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255,123,74,0.4);
+}
+.btn-primary:hover:not(:disabled),
+.btn-primary:active:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 6px 28px rgba(255,123,74,0.6);
+}
+.btn-secondary {
+  background: rgba(255,255,255,0.1); color: var(--cream);
+  border: 2px solid rgba(255,255,255,0.2);
+}
+.btn-small { font-size: 1rem; padding: 10px 20px; border-radius: 12px; }
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════ */
+.nikud   { font-size: 1.15rem; line-height: 2; text-align: right; }
+.title   { font-weight: 900; font-size: 2rem; text-align: center; }
+.subtitle{ font-weight: 700; font-size: 1.2rem; text-align: center; color: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   BACKGROUNDS
+   ═══════════════════════════════════════════ */
+.bg-jungle    { background: linear-gradient(170deg, #0A2E1C 0%, #0D3B24 40%, #1A1209 100%); }
+.bg-ocean     { background: linear-gradient(180deg, #0a1628 0%, #0d2847 40%, #1a3a5c 100%); }
+.bg-cave      { background: linear-gradient(180deg, #0a0a12 0%, #1a1020 50%, #0d0d18 100%); }
+.bg-beach     { background: linear-gradient(180deg, #1a3a5c 0%, #2B8FBF 30%, #E8D5A3 80%, #d4b87a 100%); }
+.bg-waterfall { background: linear-gradient(180deg, #0D3B24 0%, #1a4a3a 50%, #0a2a3a 100%); }
+
+/* ═══════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: .7; }
+  50%      { transform: scale(1.08); opacity: 1; }
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-8px); }
+  40%     { transform: translateX(8px); }
+  60%     { transform: translateX(-5px); }
+  80%     { transform: translateX(5px); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-8px); }
+}
+@keyframes breathe {
+  0%,100% { transform: scale(1);   filter: brightness(1); }
+  50%     { transform: scale(1.12); filter: brightness(1.3); }
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(-10px) rotate(0deg);   opacity: 1; }
+  100% { transform: translateY(100vh)  rotate(720deg); opacity: 0; }
+}
+@keyframes waveMove {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.anim-fadeInUp { animation: fadeInUp 0.6s ease both; }
+.anim-fadeIn   { animation: fadeIn   0.5s ease both; }
+.anim-pulse    { animation: pulse    2s ease-in-out infinite; }
+.anim-shake    { animation: shake    0.5s ease; }
+.anim-float    { animation: float    3s ease-in-out infinite; }
+.anim-breathe  { animation: breathe  2.5s ease-in-out infinite; }
+.stagger-1 { animation-delay: .1s; }
+.stagger-2 { animation-delay: .2s; }
+.stagger-3 { animation-delay: .3s; }
+.stagger-4 { animation-delay: .5s; }
+.stagger-5 { animation-delay: .7s; }
+
+/* ═══════════════════════════════════════════
+   LEAVES BACKGROUND
+   ═══════════════════════════════════════════ */
+.leaves-bg {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden; z-index: 0;
+}
+.leaf {
+  position: absolute; font-size: 2rem; opacity: .15;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════
+   WAVES
+   ═══════════════════════════════════════════ */
+.waves-container {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+  overflow: hidden; z-index: 1; pointer-events: none;
+}
+.wave-line {
+  position: absolute; bottom: 0; width: 200%; height: 40px;
+  animation: waveMove 6s linear infinite;
+}
+
+/* ═══════════════════════════════════════════
+   GAME HEADER
+   ═══════════════════════════════════════════ */
+.game-header {
+  position: absolute; top: 0; left: 0; right: 0; height: 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; z-index: 100;
+  background: rgba(10,46,28,.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.game-header button {
+  background: none; border: none; color: var(--cream); cursor: pointer;
+  font-size: 1.4rem; min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+.game-header .zone-name { font-weight: 700; font-size: 1rem; color: var(--gold); }
+.timer-display {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .9rem; color: var(--sunset); font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════
+   MAP SCREEN
+   ═══════════════════════════════════════════ */
+.island-map {
+  position: relative; width: 100%; max-width: 400px; aspect-ratio: 1;
+}
+.zone-node {
+  position: absolute; width: 70px; height: 70px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1.8rem; transition: all .3s ease;
+  border: 3px solid rgba(255,255,255,.2); background: rgba(10,46,28,.8);
+}
+.zone-node.unsolved {
+  animation: pulse 2s ease-in-out infinite;
+  border-color: var(--turquoise);
+  box-shadow: 0 0 20px rgba(62,216,201,.3);
+}
+.zone-node.solved { border-color: var(--success); background: rgba(74,232,141,.2); }
+.zone-node .zone-label { font-size: .55rem; font-weight: 700; color: var(--cream); margin-top: 2px; white-space: nowrap; }
+.zone-node .digit-badge {
+  position: absolute; top: -8px; right: -8px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--gold); color: var(--earth-dark);
+  font-weight: 900; font-size: .85rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ═══════════════════════════════════════════
+   RAFT & CODE DISPLAY
+   ═══════════════════════════════════════════ */
+.raft-area { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 12px; }
+.raft-parts { display: flex; gap: 6px; }
+.raft-part {
+  width: 40px; height: 40px; border-radius: 10px;
+  border: 2px dashed rgba(255,255,255,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; transition: all .3s;
+}
+.raft-part.found { border: 2px solid var(--gold); background: rgba(242,201,76,.2); }
+.code-slots { display: flex; gap: 8px; margin-top: 8px; }
+.code-slot {
+  width: 36px; height: 44px; border-radius: 8px;
+  border: 2px solid rgba(255,255,255,.2); background: rgba(0,0,0,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 1.3rem; color: var(--gold);
+}
+.code-slot.filled { border-color: var(--turquoise); background: rgba(62,216,201,.15); }
+
+/* ═══════════════════════════════════════════
+   PUZZLE COMMON
+   ═══════════════════════════════════════════ */
+.puzzle-container {
+  width: 100%; max-width: 500px; padding: 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.puzzle-instruction {
+  background: rgba(0,0,0,.3); border-radius: 16px;
+  padding: 16px; width: 100%;
+  border-right: 4px solid var(--gold);
+}
+
+/* ═══════════════════════════════════════════
+   FEEDBACK BUBBLES
+   ═══════════════════════════════════════════ */
+.feedback-bubble {
+  padding: 12px 20px; border-radius: 16px;
+  font-weight: 700; text-align: center;
+  animation: fadeInUp .3s ease;
+}
+.feedback-success { background: rgba(74,232,141,.2);  color: var(--success); border: 1px solid var(--success); }
+.feedback-error   { background: rgba(232,93,74,.2);   color: var(--danger);  border: 1px solid var(--danger); }
+.feedback-info    { background: rgba(62,216,201,.15);  color: var(--turquoise); border: 1px solid rgba(62,216,201,.3); }
+
+/* ═══════════════════════════════════════════
+   HINT SYSTEM
+   ═══════════════════════════════════════════ */
+.hint-btn {
+  position: fixed; bottom: 20px; left: 20px;
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--mist); border: none; cursor: pointer;
+  font-size: 1.5rem; color: #fff; z-index: 90;
+  box-shadow: 0 4px 16px rgba(139,111,176,.4);
+  animation: breathe 2.5s ease-in-out infinite;
+}
+.hint-bubble {
+  position: fixed; bottom: 80px; left: 20px;
+  max-width: 280px; padding: 16px; border-radius: 16px;
+  background: rgba(139,111,176,.95); color: #fff;
+  font-size: .95rem; line-height: 1.8; z-index: 90;
+  animation: fadeInUp .3s ease; backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.2);
+}
+.passive-hint { cursor: pointer; transition: all .2s; }
+.passive-hint:hover { filter: brightness(1.3); }
+
+/* ═══════════════════════════════════════════
+   CONFETTI
+   ═══════════════════════════════════════════ */
+.confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 200; }
+.confetti-piece {
+  position: absolute; top: -20px;
+  width: 12px; height: 12px; border-radius: 2px;
+  animation: confettiFall 2s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════
+   JUNGLE PUZZLE
+   ═══════════════════════════════════════════ */
+.jungle-grid { display: grid; gap: 2px; width: 100%; max-width: 320px; aspect-ratio: 1; }
+.jungle-cell {
+  border-radius: 4px; display: flex; align-items: center; justify-content: center;
+  font-size: .9rem; transition: all .2s; aspect-ratio: 1;
+}
+.jungle-cell.path     { background: rgba(232,213,163,.3); }
+.jungle-cell.obstacle { background: rgba(232,93,74,.25); }
+.jungle-cell.empty    { background: rgba(255,255,255,.05); }
+.jungle-cell.goal     { background: rgba(242,201,76,.4); }
+
+.command-bar {
+  display: flex; gap: 4px; flex-wrap: wrap; justify-content: center;
+  padding: 8px; background: rgba(0,0,0,.3); border-radius: 12px;
+}
+.command-symbol {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700;
+}
+.symbol-missing { border: 2px dashed var(--gold); cursor: pointer; background: rgba(242,201,76,.15); }
+.symbol-picker {
+  display: flex; gap: 8px; padding: 8px;
+  background: rgba(0,0,0,.4); border-radius: 12px; flex-wrap: wrap; justify-content: center;
+}
+.symbol-option {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+  cursor: pointer; border: 2px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.08); transition: all .2s;
+}
+.symbol-option:hover,
+.symbol-option:active { border-color: var(--turquoise); background: rgba(62,216,201,.2); }
+
+/* ═══════════════════════════════════════════
+   PARROT PUZZLE
+   ═══════════════════════════════════════════ */
+.branch-row { display: flex; align-items: center; gap: 4px; padding: 6px 0; position: relative; }
+.branch-bg {
+  position: absolute; left: -20px; right: -20px; top: 50%;
+  height: 8px; background: #5a3a1a; border-radius: 4px; transform: translateY(-50%); z-index: 0;
+}
+.parrot-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 900; position: relative; z-index: 1;
+  border: 2px solid rgba(255,255,255,.3); transition: all .2s;
+}
+.parrot-slot {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 3px dashed var(--gold); position: relative; z-index: 1;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; background: rgba(242,201,76,.1);
+}
+.color-picker-row { display: flex; gap: 8px; padding: 8px; background: rgba(0,0,0,.3); border-radius: 12px; }
+.color-pick {
+  width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+  border: 3px solid transparent; transition: all .2s;
+}
+.color-pick:hover,
+.color-pick:active { border-color: #fff; transform: scale(1.15); }
+.count-input-area { display: flex; align-items: center; gap: 12px; }
+.count-input, .math-input {
+  width: 60px; height: 50px; border-radius: 12px;
+  border: 2px solid var(--turquoise); background: rgba(0,0,0,.4);
+  color: var(--cream); font-size: 1.5rem; font-weight: 900;
+  text-align: center; font-family: var(--font-main);
+}
+.math-input { border-color: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   PIPE PUZZLE
+   ═══════════════════════════════════════════ */
+.pipe-grid { display: grid; gap: 4px; width: 100%; max-width: 340px; }
+.pipe-cell {
+  aspect-ratio: 1; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.06); position: relative;
+  cursor: pointer; transition: all .3s;
+  border: 2px solid rgba(255,255,255,.1);
+}
+.pipe-cell.fixed  { background: rgba(255,255,255,.12); }
+.pipe-cell.wall   { background: rgba(0,0,0,.3); cursor: default; border-style: none; }
+.pipe-cell.source { background: rgba(62,216,201,.3);  border-color: var(--turquoise); }
+.pipe-cell.target { background: rgba(242,201,76,.3);  border-color: var(--gold); }
+.pipe-cell.filled-water {
+  background: rgba(43,143,191,.35);
+  border-color: rgba(43,143,191,.6);
+  animation: waterPulse 1.2s ease-in-out infinite;
+}
+.pipe-symbol { font-size: 2.2rem; line-height: 1; transition: color .3s; }
+.pipe-symbol.water-flow { color: var(--water-blue) !important; text-shadow: 0 0 8px rgba(43,143,191,.6); }
+.pipe-label { position: absolute; font-size: 0.8rem; bottom: 2px; right: 4px; }
+@keyframes waterPulse {
+  0%, 100% { background: rgba(43,143,191,.3); }
+  50%      { background: rgba(43,143,191,.55); }
+}
+
+/* ═══════════════════════════════════════════
+   CAVE PUZZLE
+   ═══════════════════════════════════════════ */
+.cave-area { position: relative; width: 100%; height: 100%; cursor: none; overflow: hidden; }
+.torch-light {
+  position: absolute; width: 160px; height: 160px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,200,100,.7) 0%, rgba(255,200,100,.2) 40%, transparent 70%);
+  transform: translate(-50%, -50%); z-index: 10;
+}
+.cave-object {
+  position: absolute; font-size: 1.8rem; cursor: pointer;
+  opacity: 0; transition: opacity .3s; z-index: 5;
+  min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+.cave-object.lit       { opacity: 1; }
+.cave-object.collected { opacity: .3; transform: scale(.5); }
+.piece-tray { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.piece-item {
+  width: 50px; height: 40px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(139,111,176,.2); cursor: pointer;
+  border: 2px solid var(--mist); font-size: 1.3rem; transition: all .2s;
+}
+.piece-item.selected { border-color: var(--gold); background: rgba(242,201,76,.2); }
+.piece-item.used     { opacity: .3; cursor: default; }
+
+/* ═══════════════════════════════════════════
+   BEACH MAP PUZZLE
+   ═══════════════════════════════════════════ */
+.treasure-row {
+  display: flex; gap: 8px; width: 100%; max-width: 400px;
+  justify-content: center; padding: 16px 8px;
+  background: linear-gradient(135deg, #d4a458, #c49445, #b8863a);
+  border-radius: 12px; border: 3px solid #8a6030;
+  box-shadow: inset 0 0 20px rgba(0,0,0,.3);
+}
+.row-symbol {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 8px 6px; border-radius: 10px; cursor: pointer;
+  min-width: 52px; transition: all .2s;
+  border: 2px solid transparent;
+}
+.row-symbol:hover,
+.row-symbol:active { background: rgba(255,255,255,.2); transform: scale(1.1); }
+.row-symbol.eliminated { opacity: .2; pointer-events: none; }
+.row-symbol.selected { background: rgba(242,201,76,.4); box-shadow: 0 0 12px var(--gold); border-color: var(--gold); }
+.row-symbol-num { font-size: 0.7rem; font-weight: 700; color: rgba(0,0,0,.5); }
+.row-symbol-emoji { font-size: 1.8rem; }
+.clue-card {
+  background: rgba(0,0,0,.4); border-radius: 10px; padding: 10px 14px;
+  font-size: .95rem; line-height: 1.9; border-right: 3px solid var(--gold);
+}
+
+/* ═══════════════════════════════════════════
+   VICTORY
+   ═══════════════════════════════════════════ */
+.victory-stat {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 20px; background: rgba(255,255,255,.08); border-radius: 12px; font-size: 1rem;
+}
+.victory-stat .stat-icon  { font-size: 1.5rem; }
+.victory-stat .stat-value { font-weight: 900; color: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
