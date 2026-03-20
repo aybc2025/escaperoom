@@ -367,31 +367,34 @@ html, body, #root {
 /* ═══════════════════════════════════════════
    PIPE PUZZLE
    ═══════════════════════════════════════════ */
-.pipe-grid { display: grid; gap: 3px; width: 100%; max-width: 300px; }
+.pipe-grid { display: grid; gap: 4px; width: 100%; max-width: 340px; }
 .pipe-cell {
-  aspect-ratio: 1; border-radius: 6px;
+  aspect-ratio: 1; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   background: rgba(255,255,255,.06); position: relative;
-  cursor: pointer; transition: all .2s;
-  border: 1px solid rgba(255,255,255,.08);
+  cursor: pointer; transition: all .3s;
+  border: 2px solid rgba(255,255,255,.1);
 }
 .pipe-cell.fixed  { background: rgba(255,255,255,.12); }
+.pipe-cell.wall   { background: rgba(0,0,0,.3); cursor: default; border-style: none; }
 .pipe-cell.source { background: rgba(62,216,201,.3);  border-color: var(--turquoise); }
 .pipe-cell.target { background: rgba(242,201,76,.3);  border-color: var(--gold); }
-.pipe-cell.filled-water { background: rgba(43,143,191,.4); }
-.pipe-drag-tray {
-  display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
-  padding: 8px; background: rgba(0,0,0,.3); border-radius: 12px;
+.pipe-cell.filled-water {
+  background: rgba(43,143,191,.35);
+  border-color: rgba(43,143,191,.6);
+  animation: waterPulse 1.2s ease-in-out infinite;
 }
-.pipe-drag-item {
-  width: 50px; height: 50px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,.1); cursor: pointer;
-  border: 2px solid rgba(255,255,255,.15); transition: all .2s;
+.pipe-cell svg { position: absolute; inset: 4px; width: calc(100% - 8px); height: calc(100% - 8px); }
+.pipe-cell:not(.fixed):not(.wall):hover { border-color: var(--gold); transform: scale(1.05); }
+.pipe-label { position: absolute; font-size: 0.8rem; bottom: 2px; right: 4px; z-index: 2; }
+.water-inner { animation: waterShimmer 1s ease-in-out infinite alternate; }
+@keyframes waterPulse {
+  0%, 100% { background: rgba(43,143,191,.3); }
+  50%      { background: rgba(43,143,191,.55); }
 }
-.pipe-drag-item.selected {
-  border-color: var(--turquoise); background: rgba(62,216,201,.2);
-  box-shadow: 0 0 12px rgba(62,216,201,.3);
+@keyframes waterShimmer {
+  0%   { opacity: .4; }
+  100% { opacity: .9; }
 }
 
 /* ═══════════════════════════════════════════
@@ -424,23 +427,25 @@ html, body, #root {
 /* ═══════════════════════════════════════════
    BEACH MAP PUZZLE
    ═══════════════════════════════════════════ */
-.treasure-map {
-  width: 100%; max-width: 340px; aspect-ratio: 1.2;
+.treasure-row {
+  display: flex; gap: 8px; width: 100%; max-width: 400px;
+  justify-content: center; padding: 16px 8px;
   background: linear-gradient(135deg, #d4a458, #c49445, #b8863a);
-  border-radius: 12px; position: relative; padding: 16px;
-  border: 3px solid #8a6030;
-  box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+  border-radius: 12px; border: 3px solid #8a6030;
+  box-shadow: inset 0 0 20px rgba(0,0,0,.3);
 }
-.map-symbol {
-  position: absolute; font-size: 2rem; cursor: pointer;
-  min-width: 44px; min-height: 44px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .2s; border-radius: 50%;
+.row-symbol {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 8px 6px; border-radius: 10px; cursor: pointer;
+  min-width: 52px; transition: all .2s;
+  border: 2px solid transparent;
 }
-.map-symbol:hover,
-.map-symbol:active { background: rgba(255,255,255,.2); transform: scale(1.2); }
-.map-symbol.eliminated { opacity: .2; }
-.map-symbol.selected   { background: rgba(242,201,76,.4); box-shadow: 0 0 16px var(--gold); }
+.row-symbol:hover,
+.row-symbol:active { background: rgba(255,255,255,.2); transform: scale(1.1); }
+.row-symbol.eliminated { opacity: .2; pointer-events: none; }
+.row-symbol.selected { background: rgba(242,201,76,.4); box-shadow: 0 0 12px var(--gold); border-color: var(--gold); }
+.row-symbol-num { font-size: 0.7rem; font-weight: 700; color: rgba(0,0,0,.5); }
+.row-symbol-emoji { font-size: 1.8rem; }
 .clue-card {
   background: rgba(0,0,0,.4); border-radius: 10px; padding: 10px 14px;
   font-size: .95rem; line-height: 1.9; border-right: 3px solid var(--gold);

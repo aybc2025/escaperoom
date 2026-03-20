@@ -11,13 +11,24 @@ const GRID = [
   [0, 0, 0, 0, 0, 1, 4],
 ];
 
-const COMMANDS_TEMPLATE = ['🟢', '🟢', null, '🟢', '🟢', '🔴', '🟢', '🟢', null, '🔴', '🟢', '🟢'];
-const CORRECT = { 2: '🔴', 8: '🟢' };
+/* Absolute direction arrows — no more facing/turning confusion */
+const ARROW_DIR = {
+  '➡️': [0, 1],
+  '⬇️': [1, 0],
+  '⬅️': [0, -1],
+  '⬆️': [-1, 0],
+};
+
+/*
+  Solution path: ➡️➡️⬇️⬇️➡️➡️⬇️⬇️➡️⬇️⬇️➡️
+  Blanks at indices 3 and 8.
+*/
+const COMMANDS_TEMPLATE = ['➡️', '➡️', '⬇️', null, '➡️', '➡️', '⬇️', '⬇️', null, '⬇️', '⬇️', '➡️'];
+const CORRECT = { 3: '⬇️', 8: '➡️' };
 const OBSTACLE_EMOJIS = ['🐍', '🌵', '💩'];
-const DIR = [[0, 1], [1, 0], [0, -1], [-1, 0]]; // right, down, left, up
 
 export default function JunglePuzzle({ onSolve }) {
-  const [commands, setCommands] = useState(COMMANDS_TEMPLATE);
+  const [commands, setCommands] = useState([...COMMANDS_TEMPLATE]);
   const [pickIdx, setPickIdx] = useState(null);
   const [playerPath, setPlayerPath] = useState([]);
   const [simulating, setSimulating] = useState(false);
@@ -31,27 +42,33 @@ export default function JunglePuzzle({ onSolve }) {
     setPickIdx(null);
   };
 
+  const retry = () => {
+    setCommands([...COMMANDS_TEMPLATE]);
+    setPlayerPath([]);
+    setFeedback(null);
+    setPickIdx(null);
+  };
+
   const simulate = () => {
     if (commands.includes(null)) {
-      setFeedback({ ok: false, text: 'מַלְאוּ קֹדֶם אֶת הַסְּמָלִים הַחֲסֵרִים!' });
+      setFeedback({ ok: false, text: 'מַלְאוּ קֹדֶם אֶת הַחִצִּים הַחֲסֵרִים!' });
       return;
     }
     setSimulating(true);
     setFeedback(null);
 
-    let pos = { r: 0, c: 0 }, dir = 0;
+    let pos = { r: 0, c: 0 };
     const path = [{ ...pos }];
     let fail = false;
 
     for (const cmd of commands) {
-      if (cmd === '🟢') {
-        const nr = pos.r + DIR[dir][0];
-        const nc = pos.c + DIR[dir][1];
-        if (nr < 0 || nr >= 7 || nc < 0 || nc >= 7 || GRID[nr][nc] === 2 || GRID[nr][nc] === 0) { fail = true; break; }
-        pos = { r: nr, c: nc };
-        path.push({ ...pos });
-      } else if (cmd === '🔴') { dir = (dir + 1) % 4; }
-      else if (cmd === '🟡') { dir = (dir + 3) % 4; }
+      const delta = ARROW_DIR[cmd];
+      if (!delta) { fail = true; break; }
+      const nr = pos.r + delta[0];
+      const nc = pos.c + delta[1];
+      if (nr < 0 || nr >= 7 || nc < 0 || nc >= 7 || GRID[nr][nc] === 2 || GRID[nr][nc] === 0) { fail = true; break; }
+      pos = { r: nr, c: nc };
+      path.push({ ...pos });
     }
 
     let step = 0;
@@ -62,7 +79,6 @@ export default function JunglePuzzle({ onSolve }) {
         setSimulating(false);
         if (fail || !(pos.r === 6 && pos.c === 6)) {
           setFeedback({ ok: false, text: 'אוֹפְּס! הַדֶּרֶךְ לֹא נְכוֹנָה. נַסּוּ שׁוּב!' });
-          setPlayerPath([]);
         } else {
           setFeedback({ ok: true, text: 'מְצוּיָן! הִגַּעְתֶּם לָאַרְגָּז!' });
           setSolved(true);
@@ -77,13 +93,14 @@ export default function JunglePuzzle({ onSolve }) {
   return (
     <div className="puzzle-container">
       <div className="puzzle-instruction anim-fadeInUp">
-        <p className="nikud">מִישֶׁהוּ הִשְׁאִיר פֶּתֶק עִם הוֹרָאוֹת בִּסְמָלִים. הַשְׁלִימוּ אֶת הַסְּמָלִים הַחֲסֵרִים וְשִׁגְרוּ!</p>
+        <p className="nikud">מִישֶׁהוּ הִשְׁאִיר פֶּתֶק עִם הוֹרָאוֹת בְּחִצִּים. הַשְׁלִימוּ אֶת הַחִצִּים הַחֲסֵרִים וְשִׁגְרוּ!</p>
       </div>
 
       <div className="anim-fadeInUp stagger-1" style={{ display: 'flex', gap: 12, fontSize: '0.85rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <span>🟢 = קָדִימָה</span>
-        <span>🔴 = פְּנֵה יָמִינָה</span>
-        <span>🟡 = פְּנֵה שְׂמֹאלָה</span>
+        <span>➡️ = יָמִינָה</span>
+        <span>⬇️ = לְמַטָּה</span>
+        <span>⬅️ = שְׂמֹאלָה</span>
+        <span>⬆️ = לְמַעְלָה</span>
       </div>
 
       {/* command bar */}
@@ -102,8 +119,8 @@ export default function JunglePuzzle({ onSolve }) {
 
       {pickIdx !== null && (
         <div className="symbol-picker anim-fadeIn">
-          <span style={{ fontSize: '0.85rem', color: 'var(--gold)', width: '100%', textAlign: 'center' }}>בִּחְרוּ סֵמֶל:</span>
-          {['🟢', '🔴', '🟡'].map((s) => (
+          <span style={{ fontSize: '0.85rem', color: 'var(--gold)', width: '100%', textAlign: 'center' }}>בִּחְרוּ חֵץ:</span>
+          {['➡️', '⬇️', '⬅️', '⬆️'].map((s) => (
             <div key={s} className="symbol-option" onClick={() => pick(s)}>{s}</div>
           ))}
         </div>
@@ -141,9 +158,16 @@ export default function JunglePuzzle({ onSolve }) {
       </div>
 
       {!solved && (
-        <button className="btn btn-primary anim-fadeInUp stagger-4" onClick={simulate} disabled={simulating}>
-          {simulating ? 'בְּדֶרֶךְ...' : '🚀 שַׁגֵּר!'}
-        </button>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <button className="btn btn-primary anim-fadeInUp stagger-4" onClick={simulate} disabled={simulating}>
+            {simulating ? 'בְּדֶרֶךְ...' : '🚀 שַׁגֵּר!'}
+          </button>
+          {feedback && !feedback.ok && (
+            <button className="btn btn-secondary anim-fadeIn" onClick={retry} disabled={simulating}>
+              🔄 נַסּוּ שׁוּב
+            </button>
+          )}
+        </div>
       )}
 
       {feedback && (

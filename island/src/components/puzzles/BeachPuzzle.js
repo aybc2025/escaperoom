@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 
+/* Items in a horizontal row, positions 0–4 */
 const SYMBOLS = [
-  { id: 'palm',     emoji: '🌴', x: 20, y: 25 },
-  { id: 'mountain', emoji: '🏔️', x: 75, y: 15 },
-  { id: 'skull',    emoji: '💀', x: 50, y: 55 },
-  { id: 'diamond',  emoji: '💎', x: 40, y: 35 },
-  { id: 'anchor',   emoji: '⚓', x: 80, y: 70 },
-  { id: 'star',     emoji: '⭐', x: 15, y: 75 },
+  { id: 'palm',     emoji: '🌴', label: 'דֶּקֶל' },
+  { id: 'mountain', emoji: '🏔️', label: 'הָר' },
+  { id: 'skull',    emoji: '💀', label: 'גֻּלְגֹּלֶת' },
+  { id: 'anchor',   emoji: '⚓', label: 'עוֹגֵן' },
+  { id: 'star',     emoji: '⭐', label: 'כּוֹכָב' },
 ];
 
-const CORRECT_SYMBOL = 'diamond';
+/*
+  Clues:
+  1. "הָאוֹצָר לֹא בַּקָּצֶה" → eliminates palm(0) and star(4)
+  2. "הָאוֹצָר מִיָּמִין לַגּוּלְגֹּלֶת 💀" → skull at index 2, so must be index 3 or 4. With 4 gone → anchor(3)
+  3. "הָאוֹצָר לֹא צָמוּד לָהָר 🏔️" → mountain at index 1, so not index 0 or 2. Confirms anchor(3)
+  Answer: anchor
+*/
+const CORRECT_SYMBOL = 'anchor';
 const MATH_ANSWER = 4;
 
 export default function BeachPuzzle({ onSolve }) {
@@ -46,20 +53,20 @@ export default function BeachPuzzle({ onSolve }) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '100%' }} className="anim-fadeInUp stagger-1">
-          <div className="clue-card"><p className="nikud" style={{ fontSize: '0.9rem' }}>1. הָאוֹצָר לֹא לְיַד הָהָר 🏔️ וְלֹא לְיַד הַגּוּלְגֹּלֶת 💀</p></div>
-          <div className="clue-card"><p className="nikud" style={{ fontSize: '0.9rem' }}>2. הָאוֹצָר בֵּין הַדֶּקֶל 🌴 לָעוֹגֵן ⚓</p></div>
-          <div className="clue-card"><p className="nikud" style={{ fontSize: '0.9rem' }}>3. הָאוֹצָר הֲכִי קָרוֹב לַיַּהֲלֹם 💎</p></div>
+          <div className="clue-card"><p className="nikud" style={{ fontSize: '0.9rem' }}>1. הָאוֹצָר לֹא בַּקָּצֶה</p></div>
+          <div className="clue-card"><p className="nikud" style={{ fontSize: '0.9rem' }}>2. הָאוֹצָר מִיָּמִין לַגּוּלְגֹּלֶת 💀</p></div>
+          <div className="clue-card"><p className="nikud" style={{ fontSize: '0.9rem' }}>3. הָאוֹצָר לֹא צָמוּד לָהָר 🏔️</p></div>
         </div>
 
-        <div className="treasure-map anim-fadeInUp stagger-2">
-          {SYMBOLS.map((s) => (
+        <div className="treasure-row anim-fadeInUp stagger-2">
+          {SYMBOLS.map((s, i) => (
             <div
               key={s.id}
-              className={`map-symbol ${eliminated.includes(s.id) ? 'eliminated' : ''} ${selected === s.id ? 'selected' : ''}`}
-              style={{ left: `${s.x}%`, top: `${s.y}%` }}
+              className={`row-symbol ${eliminated.includes(s.id) ? 'eliminated' : ''} ${selected === s.id ? 'selected' : ''}`}
               onClick={() => setSelected(s.id)}
             >
-              {s.emoji}
+              <span className="row-symbol-num">{i + 1}</span>
+              <span className="row-symbol-emoji">{s.emoji}</span>
             </div>
           ))}
         </div>

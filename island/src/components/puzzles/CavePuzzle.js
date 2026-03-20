@@ -12,6 +12,8 @@ const OBJECTS = [
 ];
 
 const PIECE_SYMBOLS = ['◆', '◇', '●', '○', '◈'];
+/* Correct order: ● ◆ ◈ ◇ ○  (filled → empty) = indices [2, 0, 4, 1, 3] */
+const CORRECT_ORDER = [2, 0, 4, 1, 3];
 const DOTS_ANSWER = 5;
 
 export default function CavePuzzle({ onSolve }) {
@@ -55,7 +57,31 @@ export default function CavePuzzle({ onSolve }) {
       next[idx] = selPiece;
       setAssembled(next);
       setSelPiece(null);
-      if (next.every((s) => s !== null)) setTimeout(() => setPhase('count'), 800);
+    }
+  };
+
+  const clearSlot = (idx) => {
+    if (assembled[idx] !== null) {
+      const next = [...assembled];
+      next[idx] = null;
+      setAssembled(next);
+    }
+  };
+
+  const checkAssembly = () => {
+    const allFilled = assembled.every((s) => s !== null);
+    if (!allFilled) {
+      setFeedback({ ok: false, text: 'מַלְאוּ קֹדֶם אֶת כָּל הַמְּקוֹמוֹת!' });
+      setTimeout(() => setFeedback(null), 1500);
+      return;
+    }
+    const isCorrect = assembled.every((piece, i) => piece === CORRECT_ORDER[i]);
+    if (isCorrect) {
+      setFeedback({ ok: true, text: 'הַלּוּחַ הוּרְכַּב!' });
+      setTimeout(() => { setPhase('count'); setFeedback(null); }, 800);
+    } else {
+      setFeedback({ ok: false, text: 'הַסֵּדֶר לֹא נָכוֹן... קִרְאוּ שׁוּב אֶת הָרֶמֶז!' });
+      setTimeout(() => setFeedback(null), 2000);
     }
   };
 
@@ -114,6 +140,11 @@ export default function CavePuzzle({ onSolve }) {
           <p className="nikud">הַרְכִּיבוּ אֶת לוּחַ הָאֶבֶן — לִחְצוּ עַל שֶׁבֶר וְאָז עַל מָקוֹם בַּמִּסְגֶּרֶת.</p>
         </div>
 
+        <div className="anim-fadeInUp" style={{ background: 'rgba(139,111,176,.2)', borderRadius: 12, padding: '10px 16px', textAlign: 'center', border: '1px solid rgba(139,111,176,.4)' }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--mist)', marginBottom: 4 }}>🔮 כְּתוֹבֶת עַל הַקִּיר:</p>
+          <p className="nikud" style={{ fontSize: '1rem', color: 'var(--gold)' }}>"מֵהַמָּלֵא אֶל הָרֵיק"</p>
+        </div>
+
         <div className="piece-tray anim-fadeInUp stagger-1">
           {PIECE_SYMBOLS.map((sym, i) => (
             <div
@@ -138,12 +169,20 @@ export default function CavePuzzle({ onSolve }) {
             <div
               key={i}
               style={{ height: 48, borderRadius: 6, border: '1px dashed rgba(255,255,255,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', cursor: 'pointer', ...(piece !== null ? { background: 'rgba(139,111,176,.3)', borderStyle: 'solid' } : {}) }}
-              onClick={() => handleSlot(i)}
+              onClick={() => piece !== null ? clearSlot(i) : handleSlot(i)}
             >
               {piece !== null ? PIECE_SYMBOLS[piece] : ''}
             </div>
           ))}
         </div>
+
+        <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,.4)', textAlign: 'center' }}>לִחְצוּ עַל שֶׁבֶר בַּמִּסְגֶּרֶת כְּדֵי לְהָסִיר אוֹתוֹ</div>
+
+        <button className="btn btn-primary anim-fadeInUp stagger-3" onClick={checkAssembly}>
+          ✓ בִּדְקוּ סֵדֶר
+        </button>
+
+        {feedback && <div className={`feedback-bubble ${feedback.ok ? 'feedback-success' : 'feedback-error'}`}>{feedback.text}</div>}
       </div>
     );
   }
