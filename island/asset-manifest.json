@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/escaperoom/island/static/css/main.d105c428.css",
+    "main.js": "/escaperoom/island/static/js/main.a903659e.js",
+    "index.html": "/escaperoom/island/index.html",
+    "main.d105c428.css.map": "/escaperoom/island/static/css/main.d105c428.css.map",
+    "main.a903659e.js.map": "/escaperoom/island/static/js/main.a903659e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d105c428.css",
+    "static/js/main.a903659e.js"
+  ]
+}
